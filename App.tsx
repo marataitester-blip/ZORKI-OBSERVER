@@ -56,7 +56,7 @@ const App: React.FC = () => {
     const map: Record<ObjectState, string> = {
       [ObjectState.CONCEPTION]: 'ИДЕЯ',
       [ObjectState.FORMATION]: 'ФОРМИРОВАНИЕ',
-      [ObjectState.STABILIZATION]: 'СТАБИЛИЗАЦИЯ',
+      [ObjectState.STABILIZATION]: 'СПЕЦИАЛИЗАЦИЯ',
       [ObjectState.DEGRADATION]: 'ДЕГРАДАЦИЯ',
       [ObjectState.TERMINATION]: 'ЗАВЕРШЕНИЕ'
     };
@@ -75,28 +75,28 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen text-black p-6 md:p-12 max-w-6xl mx-auto flex flex-col relative">
-      {/* Header - Прозрачный, с черным текстом и золотой линией */}
-      <header className="flex justify-between items-baseline mb-20 border-b border-[#D4AF37] pb-8 sticky top-0 bg-white/80 backdrop-blur-md z-[100]">
-        <div>
+    <div className="min-h-screen text-black p-6 md:p-12 max-w-6xl mx-auto flex flex-col relative isolate">
+      {/* Header - Фиксированный слой поверх всего контента при скролле */}
+      <header className="flex justify-between items-baseline mb-20 border-b border-[#D4AF37] pb-8 sticky top-0 bg-white/90 backdrop-blur-xl z-[100] isolate">
+        <div className="relative z-50">
           <h1 className="text-xl font-black tracking-[0.2em] text-black">ZORKI OBSERVER</h1>
           <p className="text-[10px] uppercase tracking-widest text-zinc-500 mt-1">Метасистема / VIPAP Фреймворк</p>
         </div>
-        <div className="text-[10px] text-zinc-400 tracking-tighter font-mono uppercase">
-          v1.0.8 / {new Date().toLocaleDateString('ru-RU')}
+        <div className="text-[10px] text-zinc-400 tracking-tighter font-mono uppercase relative z-50">
+          v1.0.9 / {new Date().toLocaleDateString('ru-RU')}
         </div>
       </header>
 
-      <main className="grid grid-cols-1 lg:grid-cols-12 gap-16 relative z-10">
+      <main className="grid grid-cols-1 lg:grid-cols-12 gap-16 relative z-10 isolate">
         {/* Левая колонка */}
-        <div className="lg:col-span-7 space-y-16">
-          <section>
-            <h2 className="text-3xl md:text-5xl font-light leading-tight tracking-tight text-black italic">
+        <div className="lg:col-span-7 space-y-16 relative z-10">
+          <section className="relative z-10">
+            <h2 className="text-3xl md:text-5xl font-light leading-tight tracking-tight text-black italic relative z-50">
               «{dailyQuestion}»
             </h2>
           </section>
 
-          <section className="relative z-20">
+          <section className="relative z-30">
             <StateSwitch
               label="Определение Объекта"
               options={Object.values(ObjectState)}
@@ -116,20 +116,26 @@ const App: React.FC = () => {
             />
           </section>
 
-          <section>
-            <div className="border gold-border gold-glow p-8 bg-white/40 backdrop-blur-sm relative overflow-hidden">
-              <h3 className="text-[10px] uppercase tracking-widest text-zinc-400 mb-6 font-bold">Новое Наблюдение</h3>
-              <textarea
-                value={observationText}
-                onChange={(e) => setObservationText(e.target.value)}
-                placeholder="Зафиксируйте факты..."
-                className="w-full bg-transparent border-none text-black text-lg focus:ring-0 placeholder:text-zinc-300 min-h-[220px] resize-none mb-6 font-light leading-relaxed outline-none relative z-10"
-              />
-              <div className="flex justify-end pt-6 border-t border-[#D4AF37]/20">
+          <section className="relative z-10">
+            <div className="border gold-border gold-glow p-8 bg-white/60 backdrop-blur-md relative isolate">
+              {/* Принудительный слой фона внутри блока */}
+              <div className="absolute inset-0 bg-white/40 -z-10"></div>
+              
+              <h3 className="text-[10px] uppercase tracking-widest text-zinc-500 mb-6 font-bold relative z-50">Новое Наблюдение</h3>
+              <div className="relative z-50">
+                <textarea
+                  value={observationText}
+                  onChange={(e) => setObservationText(e.target.value)}
+                  placeholder="Зафиксируйте факты..."
+                  className="w-full bg-transparent border-none text-black text-lg focus:ring-0 placeholder:text-zinc-400 min-h-[220px] resize-none mb-6 font-light leading-relaxed outline-none"
+                />
+              </div>
+              
+              <div className="flex justify-end pt-6 border-t border-[#D4AF37]/30 relative z-50">
                 <button
                   onClick={handleSaveObservation}
                   disabled={!observationText.trim()}
-                  className="px-10 py-4 bg-black text-white text-[10px] tracking-[0.2em] font-black hover:bg-[#D4AF37] hover:text-black transition-all disabled:opacity-10 active:scale-95 shadow-xl"
+                  className="px-10 py-4 bg-black text-white text-[10px] tracking-[0.2em] font-black hover:bg-[#D4AF37] hover:text-black transition-all disabled:opacity-10 active:scale-95 shadow-2xl relative z-50"
                 >
                   ЗАПИСАТЬ
                 </button>
@@ -139,23 +145,24 @@ const App: React.FC = () => {
         </div>
 
         {/* Правая колонка */}
-        <div className="lg:col-span-5 space-y-12">
-          <section className="border gold-border gold-glow p-8 bg-white/30 backdrop-blur-sm">
-            <h3 className="text-[10px] uppercase tracking-widest text-[#B8860B] mb-6 font-black underline underline-offset-8 decoration-[#D4AF37]/40">
+        <div className="lg:col-span-5 space-y-12 relative z-10">
+          <section className="border gold-border gold-glow p-8 bg-white/40 backdrop-blur-sm relative isolate">
+            <div className="absolute inset-0 bg-white/20 -z-10"></div>
+            <h3 className="text-[10px] uppercase tracking-widest text-[#B8860B] mb-6 font-black underline underline-offset-8 decoration-[#D4AF37]/40 relative z-50">
               Запрещенные Действия
             </h3>
-            <ul className="space-y-5">
+            <ul className="space-y-5 relative z-50">
               {FORBIDDEN_ACTIONS.map((action, idx) => (
                 <li key={idx} className="flex items-start gap-4 group">
                   <span className="text-[10px] font-mono text-[#D4AF37] font-bold">0{idx + 1}</span>
-                  <span className="text-xs text-black font-medium leading-snug">{action}</span>
+                  <span className="text-xs text-black font-semibold leading-snug">{action}</span>
                 </li>
               ))}
             </ul>
           </section>
 
-          <section>
-             <div className="flex justify-between items-center mb-8">
+          <section className="relative z-10">
+             <div className="flex justify-between items-center mb-8 relative z-50">
                 <h3 className="text-[10px] uppercase tracking-widest text-zinc-400 font-bold">Журнал состояний</h3>
                 <button 
                   onClick={() => setIsHistoryExpanded(!isHistoryExpanded)}
@@ -165,27 +172,31 @@ const App: React.FC = () => {
                 </button>
              </div>
              
-             <div className="space-y-6 max-h-[700px] overflow-y-auto pr-4">
+             <div className="space-y-6 max-h-[700px] overflow-y-auto pr-4 relative z-10">
                {history.length === 0 ? (
-                 <p className="text-xs text-zinc-400 italic">Событий не зафиксировано.</p>
+                 <p className="text-xs text-zinc-400 italic relative z-50">Событий не зафиксировано.</p>
                ) : (
                  history.map((obs) => (
-                   <div key={obs.id} className="border gold-border p-6 bg-white/20 hover:gold-glow transition-all group relative z-10">
-                      <div className="flex justify-between items-start mb-4">
+                   <div key={obs.id} className="border gold-border p-6 bg-white/30 hover:gold-glow transition-all group relative isolate">
+                      <div className="absolute inset-0 bg-white/10 -z-10"></div>
+                      
+                      <div className="flex justify-between items-start mb-4 relative z-50">
                         <div className="flex gap-2 items-center">
                           <span className="text-[8px] px-2 py-0.5 bg-[#D4AF37] text-black font-black">{translateState(obs.objectState)}</span>
                           <span className="text-[8px] px-2 py-0.5 border gold-border text-[#B8860B] font-black">{translateRole(obs.humanRole)}</span>
                         </div>
                         <span className="text-[9px] font-mono text-zinc-400">{new Date(obs.timestamp).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}</span>
                       </div>
-                      <p className={`text-sm text-black font-medium leading-relaxed whitespace-pre-wrap relative z-20 ${!isHistoryExpanded && 'line-clamp-3 opacity-60'}`}>
+                      
+                      <p className={`text-sm text-black font-semibold leading-relaxed whitespace-pre-wrap relative z-50 ${!isHistoryExpanded && 'line-clamp-3 opacity-80'}`}>
                         {obs.content}
                       </p>
-                      <div className="mt-6 flex justify-between items-center pt-4 border-t border-[#D4AF37]/10">
+                      
+                      <div className="mt-6 flex justify-between items-center pt-4 border-t border-[#D4AF37]/10 relative z-50">
                         <span className="text-[9px] text-zinc-400 font-mono">{new Date(obs.timestamp).toLocaleDateString('ru-RU')}</span>
                         <button 
                           onClick={() => handleDeleteObservation(obs.id)}
-                          className="text-[8px] text-red-800 hover:text-red-600 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity font-bold"
+                          className="text-[8px] text-red-800 hover:text-red-600 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity font-black p-1"
                         >
                           Удалить
                         </button>
@@ -198,8 +209,8 @@ const App: React.FC = () => {
         </div>
       </main>
 
-      <footer className="mt-auto pt-24 pb-20 border-t border-zinc-100 text-center relative z-10">
-        <p className="text-[9px] tracking-[0.5em] text-zinc-300 uppercase font-semibold">
+      <footer className="mt-auto pt-24 pb-20 border-t border-zinc-100 text-center relative z-10 isolate">
+        <p className="text-[9px] tracking-[0.5em] text-zinc-300 uppercase font-bold relative z-50">
           Наблюдаемость — первичная функция эволюции систем.
         </p>
       </footer>

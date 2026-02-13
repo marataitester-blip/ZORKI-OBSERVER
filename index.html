@@ -20,10 +20,13 @@
             -webkit-font-smoothing: antialiased;
             margin: 0;
             padding: 0;
+            /* Предотвращение наложения системных слоев */
+            isolation: isolate;
         }
         #root {
             min-height: 100vh;
             position: relative;
+            z-index: 1;
         }
         ::-webkit-scrollbar {
             width: 6px;
@@ -38,13 +41,17 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #B8860B;
         }
-        /* Золотое свечение для рамок */
         .gold-glow {
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
             border-color: #D4AF37 !important;
         }
         .gold-border {
             border: 1px solid #D4AF37;
+        }
+        /* Приоритетный текст */
+        .text-priority {
+            position: relative;
+            z-index: 50;
         }
         * {
             box-sizing: border-box;
