@@ -23,7 +23,7 @@ const App: React.FC = () => {
       try {
         setHistory(JSON.parse(saved));
       } catch (e) {
-        console.error("Failed to parse history", e);
+        console.error("Ошибка загрузки истории:", e);
       }
     }
     setDailyQuestion(DAILY_QUESTIONS[Math.floor(Math.random() * DAILY_QUESTIONS.length)]);
@@ -75,22 +75,22 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen p-6 md:p-12 max-w-6xl mx-auto">
-      {/* Header */}
-      <header className="flex justify-between items-baseline mb-20 border-b border-zinc-900 pb-8 bg-black sticky top-0 z-50">
-        <div>
-          <h1 className="text-xl font-light tracking-[0.2em] text-white">ZORKI OBSERVER</h1>
-          <p className="text-[10px] uppercase tracking-widest text-zinc-500 mt-1">Метасистема / VIPAP Фреймворк</p>
+    <div className="min-h-screen bg-black text-white p-6 md:p-12 max-w-6xl mx-auto relative z-10">
+      {/* Header - Фиксированный фон для исключения наслоения при скролле */}
+      <header className="flex justify-between items-baseline mb-20 border-b border-zinc-900 pb-8 bg-black sticky top-0 z-[100]">
+        <div className="bg-black">
+          <h1 className="text-xl font-light tracking-[0.2em]">ZORKI OBSERVER</h1>
+          <p className="text-[10px] uppercase tracking-widest text-zinc-600 mt-1">Метасистема / VIPAP Фреймворк</p>
         </div>
-        <div className="text-[10px] text-zinc-600 tracking-tighter font-mono">
-          v1.0.5 / {new Date().toLocaleDateString('ru-RU')}
+        <div className="text-[10px] text-zinc-700 tracking-tighter font-mono bg-black">
+          v1.0.6 / {new Date().toLocaleDateString('ru-RU')}
         </div>
       </header>
 
       <main className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-        {/* Left Column */}
-        <div className="lg:col-span-7">
-          <section className="mb-16">
+        {/* Левая колонка */}
+        <div className="lg:col-span-7 space-y-16">
+          <section>
             <h2 className="text-3xl md:text-4xl font-light leading-tight tracking-tight text-white italic">
               «{dailyQuestion}»
             </h2>
@@ -116,76 +116,76 @@ const App: React.FC = () => {
             />
           </section>
 
-          <section className="mt-12">
-            <div className="border border-zinc-800 p-6 bg-black shadow-2xl relative z-10">
-              <h3 className="text-[10px] uppercase tracking-widest text-zinc-500 mb-4 font-semibold">Новое Наблюдение</h3>
+          <section>
+            <div className="border border-zinc-900 p-8 bg-black relative z-10">
+              <h3 className="text-[10px] uppercase tracking-widest text-zinc-600 mb-6 font-bold">Новое Наблюдение</h3>
               <textarea
                 value={observationText}
                 onChange={(e) => setObservationText(e.target.value)}
-                placeholder="Опишите факты текущего состояния, симптомы и отклонения..."
-                className="w-full bg-black border-none text-white text-base focus:ring-0 placeholder:text-zinc-800 min-h-[180px] resize-none mb-4 font-light leading-relaxed outline-none"
+                placeholder="Зафиксируйте факты, а не интерпретации..."
+                className="w-full bg-black border-none text-white text-base focus:ring-0 placeholder:text-zinc-800 min-h-[200px] resize-none mb-6 font-light leading-relaxed outline-none"
               />
-              <div className="flex justify-end pt-4 border-t border-zinc-900">
+              <div className="flex justify-end pt-6 border-t border-zinc-900">
                 <button
                   onClick={handleSaveObservation}
                   disabled={!observationText.trim()}
-                  className="px-8 py-3 bg-white text-black text-[10px] tracking-widest font-bold hover:bg-zinc-200 transition-colors disabled:opacity-20 active:scale-95 transform"
+                  className="px-10 py-4 bg-white text-black text-[10px] tracking-[0.2em] font-black hover:bg-zinc-200 transition-all disabled:opacity-10 active:scale-95"
                 >
-                  ЗАФИКСИРОВАТЬ
+                  ЗАПИСАТЬ
                 </button>
               </div>
             </div>
           </section>
         </div>
 
-        {/* Right Column */}
+        {/* Правая колонка */}
         <div className="lg:col-span-5 space-y-12">
-          <section className="border border-zinc-800 p-8 bg-black">
-            <h3 className="text-[10px] uppercase tracking-widest text-red-500 mb-6 font-semibold underline underline-offset-8 decoration-red-900/50">
+          <section className="border border-zinc-900 p-8 bg-black">
+            <h3 className="text-[10px] uppercase tracking-widest text-red-600 mb-6 font-bold underline underline-offset-8 decoration-red-900/30">
               Запрещенные Действия
             </h3>
-            <ul className="space-y-4">
+            <ul className="space-y-5">
               {FORBIDDEN_ACTIONS.map((action, idx) => (
                 <li key={idx} className="flex items-start gap-4 group">
-                  <span className="text-[10px] font-mono text-zinc-800 group-hover:text-red-500 transition-colors">0{idx + 1}</span>
-                  <span className="text-xs text-zinc-400 font-light leading-tight group-hover:text-zinc-200 transition-colors">{action}</span>
+                  <span className="text-[10px] font-mono text-zinc-800 group-hover:text-red-600 transition-colors">0{idx + 1}</span>
+                  <span className="text-xs text-zinc-500 font-light leading-snug group-hover:text-zinc-300 transition-colors">{action}</span>
                 </li>
               ))}
             </ul>
           </section>
 
           <section>
-             <div className="flex justify-between items-center mb-6">
-                <h3 className="text-[10px] uppercase tracking-widest text-zinc-500 font-semibold">История Наблюдений</h3>
+             <div className="flex justify-between items-center mb-8">
+                <h3 className="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Журнал состояний</h3>
                 <button 
                   onClick={() => setIsHistoryExpanded(!isHistoryExpanded)}
-                  className="text-[10px] text-zinc-600 hover:text-white transition-colors underline decoration-zinc-800"
+                  className="text-[10px] text-zinc-700 hover:text-white transition-colors underline decoration-zinc-900"
                 >
                   {isHistoryExpanded ? 'Свернуть' : 'Развернуть'}
                 </button>
              </div>
              
-             <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
+             <div className="space-y-6 max-h-[700px] overflow-y-auto pr-4 custom-scrollbar">
                {history.length === 0 ? (
-                 <p className="text-xs text-zinc-800 italic">Пусто.</p>
+                 <p className="text-xs text-zinc-800 italic">Событий не зафиксировано.</p>
                ) : (
                  history.map((obs) => (
-                   <div key={obs.id} className="border border-zinc-900 p-5 bg-black hover:border-zinc-700 transition-all group">
-                      <div className="flex justify-between items-start mb-3">
+                   <div key={obs.id} className="border border-zinc-900 p-6 bg-black hover:border-zinc-700 transition-all group">
+                      <div className="flex justify-between items-start mb-4">
                         <div className="flex gap-2 items-center">
-                          <span className="text-[8px] px-1.5 py-0.5 bg-zinc-900 text-zinc-400 font-bold border border-zinc-800">{translateState(obs.objectState)}</span>
-                          <span className="text-[8px] px-1.5 py-0.5 bg-zinc-900 text-zinc-400 font-bold border border-zinc-800">{translateRole(obs.humanRole)}</span>
+                          <span className="text-[8px] px-2 py-0.5 bg-zinc-950 text-zinc-500 font-bold border border-zinc-900">{translateState(obs.objectState)}</span>
+                          <span className="text-[8px] px-2 py-0.5 bg-zinc-950 text-zinc-500 font-bold border border-zinc-900">{translateRole(obs.humanRole)}</span>
                         </div>
-                        <span className="text-[9px] font-mono text-zinc-800">{new Date(obs.timestamp).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}</span>
+                        <span className="text-[9px] font-mono text-zinc-800 uppercase">{new Date(obs.timestamp).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}</span>
                       </div>
-                      <p className={`text-sm text-zinc-300 font-light leading-relaxed whitespace-pre-wrap ${!isHistoryExpanded && 'line-clamp-3 text-zinc-500'}`}>
+                      <p className={`text-sm text-zinc-400 font-light leading-relaxed whitespace-pre-wrap ${!isHistoryExpanded && 'line-clamp-3 text-zinc-600'}`}>
                         {obs.content}
                       </p>
-                      <div className="mt-4 flex justify-between items-center">
-                        <span className="text-[9px] text-zinc-800">{new Date(obs.timestamp).toLocaleDateString('ru-RU')}</span>
+                      <div className="mt-6 flex justify-between items-center pt-4 border-t border-zinc-900/30">
+                        <span className="text-[9px] text-zinc-800 font-mono">{new Date(obs.timestamp).toLocaleDateString('ru-RU')}</span>
                         <button 
                           onClick={() => handleDeleteObservation(obs.id)}
-                          className="text-[8px] text-zinc-800 hover:text-red-600 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity"
+                          className="text-[8px] text-zinc-900 hover:text-red-700 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity font-bold"
                         >
                           Удалить
                         </button>
@@ -198,8 +198,8 @@ const App: React.FC = () => {
         </div>
       </main>
 
-      <footer className="mt-32 pt-12 border-t border-zinc-900 text-center pb-20">
-        <p className="text-[9px] tracking-[0.4em] text-zinc-800 uppercase font-medium">
+      <footer className="mt-32 pt-12 border-t border-zinc-900 text-center pb-20 bg-black">
+        <p className="text-[9px] tracking-[0.5em] text-zinc-800 uppercase font-semibold">
           Наблюдаемость — первичная функция эволюции систем.
         </p>
       </footer>
