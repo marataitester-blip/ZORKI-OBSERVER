@@ -1,48 +1,50 @@
 
 <!DOCTYPE html>
-<html lang="ru" style="background-color: #000000;">
+<html lang="ru" style="background-color: #fcfcfc;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZORKI OBSERVER / VIPAP</title>
     
-    <!-- Фикс 404 для всех типов фавиконов через Data URI -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👁️</text></svg>">
-    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYGA4z8DAwMgwZ84cBmIBqGZkYGCmEAbD4P9A/R9IBv0fSAatGDSmBgkA38oOB6pT7XoAAAAASUVORK5CYII=">
-    <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYGA4z8DAwMgwZ84cBmIBqGZkYGCmEAbD4P9A/R9IBv0fSAatGDSmBgkA38oOB6pT7XoAAAAASUVORK5CYII=">
-    <link rel="shortcut icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeg64mYAAAAASUVORK5CYII=">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #000000;
-            color: #ffffff;
+            background-color: #fcfcfc;
+            color: #000000;
             -webkit-font-smoothing: antialiased;
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
         }
         #root {
-            background-color: #000000;
             min-height: 100vh;
-            /* Убран z-index для предотвращения конфликтов со слоями браузера */
             position: relative;
         }
         ::-webkit-scrollbar {
-            width: 5px;
+            width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #000000;
+            background: #f0f0f0;
         }
         ::-webkit-scrollbar-thumb {
-            background: #111111;
+            background: #D4AF37;
+            border-radius: 0px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #222222;
+            background: #B8860B;
+        }
+        /* Золотое свечение для рамок */
+        .gold-glow {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            border-color: #D4AF37 !important;
+        }
+        .gold-border {
+            border: 1px solid #D4AF37;
         }
         * {
             box-sizing: border-box;
@@ -59,7 +61,7 @@
 }
 </script>
 </head>
-<body class="selection:bg-white selection:text-black">
+<body class="selection:bg-[#D4AF37] selection:text-black">
     <div id="root"></div>
 </body>
 </html>

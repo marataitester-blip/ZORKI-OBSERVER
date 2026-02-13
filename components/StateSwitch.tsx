@@ -19,38 +19,38 @@ export const StateSwitch = <T extends string,>({
   formatter
 }: StateSwitchProps<T>) => {
   return (
-    <div className="mb-14 relative z-20 bg-black">
-      <h3 className="text-[10px] uppercase tracking-[0.2em] text-zinc-700 mb-5 font-black">{label}</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-5 gap-2">
+    <div className="mb-14 relative z-20">
+      <h3 className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 mb-5 font-black">{label}</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-5 gap-3">
         {options.map((option) => {
           const isActive = activeValue === option;
           return (
             <button
               key={option}
               onClick={() => onChange(option)}
-              className={`px-5 py-5 text-left flex flex-col justify-between border transition-all duration-300 h-32 group relative outline-none ${
+              className={`px-5 py-5 text-left flex flex-col justify-between border transition-all duration-300 h-32 group relative outline-none shadow-sm ${
                 isActive
-                  ? 'bg-white border-white ring-1 ring-white shadow-xl'
-                  : 'bg-black border-zinc-900 hover:border-zinc-700'
+                  ? 'bg-[#D4AF37] border-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.4)]'
+                  : 'bg-white/50 border-zinc-200 hover:border-[#D4AF37] hover:gold-glow'
               }`}
             >
-              <span className={`text-[10px] font-black tracking-tight mb-3 ${
-                isActive ? 'text-black' : 'text-zinc-500 group-hover:text-white'
+              <span className={`text-[11px] font-black tracking-tight mb-3 ${
+                isActive ? 'text-black' : 'text-black opacity-80 group-hover:opacity-100'
               }`}>
                 {formatter ? formatter(option) : option}
               </span>
               
               {descriptions && descriptions[option] && (
                 <span className={`text-[9px] leading-tight font-medium transition-opacity ${
-                  isActive ? 'text-zinc-900 opacity-100' : 'text-zinc-700 group-hover:text-zinc-400'
+                  isActive ? 'text-black/80' : 'text-zinc-500 group-hover:text-black/60'
                 }`}>
                   {descriptions[option]}
                 </span>
               )}
 
-              {/* Индикатор активности сверху */}
+              {/* Декоративная подложка-градиент снизу */}
               {isActive && (
-                <div className="absolute top-0 left-0 w-full h-1 bg-black/5"></div>
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-black/10"></div>
               )}
             </button>
           );
