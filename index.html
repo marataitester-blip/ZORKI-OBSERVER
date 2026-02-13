@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru" style="background-color: #fcfcfc;">
 <head>
@@ -20,13 +19,17 @@
             -webkit-font-smoothing: antialiased;
             margin: 0;
             padding: 0;
-            /* Предотвращение наложения системных слоев */
+            min-height: 100vh;
+            /* Создаем изолированный контекст наложения на уровне body */
             isolation: isolate;
+            overflow-x: hidden;
         }
         #root {
             min-height: 100vh;
             position: relative;
-            z-index: 1;
+            /* Убеждаемся, что root всегда доступен и не перекрыт */
+            display: flex;
+            flex-direction: column;
         }
         ::-webkit-scrollbar {
             width: 6px;
@@ -48,7 +51,7 @@
         .gold-border {
             border: 1px solid #D4AF37;
         }
-        /* Приоритетный текст */
+        /* Глобальный класс для приоритетного текста */
         .text-priority {
             position: relative;
             z-index: 50;
@@ -70,5 +73,7 @@
 </head>
 <body class="selection:bg-[#D4AF37] selection:text-black">
     <div id="root"></div>
+    <!-- Точка входа в React приложение -->
+    <script type="module" src="index.tsx"></script>
 </body>
 </html>
