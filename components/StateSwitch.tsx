@@ -20,7 +20,7 @@ export const StateSwitch = <T extends string,>({
 }: StateSwitchProps<T>) => {
   return (
     <div className="mb-14 relative z-40 isolate">
-      <h3 className="text-xs uppercase tracking-[0.25em] text-zinc-500 mb-6 font-black relative z-50">{label}</h3>
+      <h3 className="text-sm uppercase tracking-[0.25em] text-zinc-500 mb-6 font-black relative z-50">{label}</h3>
       <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 relative z-40">
         {options.map((option) => {
           const isActive = activeValue === option;
@@ -37,15 +37,15 @@ export const StateSwitch = <T extends string,>({
               {/* Фактический фон кнопки для обеспечения непрозрачности под текстом */}
               <div className={`absolute inset-0 -z-10 ${isActive ? 'bg-[#D4AF37]' : 'bg-white/60'}`}></div>
               
-              <span className={`text-base font-black tracking-tight mb-3 relative z-50 leading-tight uppercase ${
+              <span className={`text-lg font-black tracking-tight mb-3 relative z-50 leading-tight uppercase ${
                 isActive ? 'text-black' : 'text-black opacity-90 group-hover:opacity-100'
               }`}>
                 {formatter ? formatter(option) : option}
               </span>
               
               {descriptions && descriptions[option] && (
-                <span className={`text-xs leading-snug font-bold transition-opacity relative z-50 ${
-                  isActive ? 'text-black/70' : 'text-zinc-600 group-hover:text-black/70'
+                <span className={`text-sm leading-snug font-bold transition-opacity relative z-50 ${
+                  isActive ? 'text-black/70' : 'text-zinc-600 group-hover:text-black/80'
                 }`}>
                   {descriptions[option]}
                 </span>
