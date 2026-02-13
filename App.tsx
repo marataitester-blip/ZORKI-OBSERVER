@@ -75,28 +75,28 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white p-6 md:p-12 max-w-6xl mx-auto relative z-10">
-      {/* Header - Фиксированный фон для исключения наслоения при скролле */}
+    <div className="min-h-screen bg-black text-white p-6 md:p-12 max-w-6xl mx-auto flex flex-col">
+      {/* Header - Максимальный приоритет (z-100) и непрозрачный черный фон */}
       <header className="flex justify-between items-baseline mb-20 border-b border-zinc-900 pb-8 bg-black sticky top-0 z-[100]">
-        <div className="bg-black">
-          <h1 className="text-xl font-light tracking-[0.2em]">ZORKI OBSERVER</h1>
-          <p className="text-[10px] uppercase tracking-widest text-zinc-600 mt-1">Метасистема / VIPAP Фреймворк</p>
+        <div className="bg-black pr-4">
+          <h1 className="text-xl font-light tracking-[0.2em] text-white">ZORKI OBSERVER</h1>
+          <p className="text-[10px] uppercase tracking-widest text-zinc-500 mt-1">Метасистема / VIPAP Фреймворк</p>
         </div>
-        <div className="text-[10px] text-zinc-700 tracking-tighter font-mono bg-black">
-          v1.0.6 / {new Date().toLocaleDateString('ru-RU')}
+        <div className="text-[10px] text-zinc-700 tracking-tighter font-mono bg-black pl-4">
+          v1.0.7 / {new Date().toLocaleDateString('ru-RU')}
         </div>
       </header>
 
-      <main className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+      <main className="grid grid-cols-1 lg:grid-cols-12 gap-16 relative">
         {/* Левая колонка */}
         <div className="lg:col-span-7 space-y-16">
-          <section>
+          <section className="relative">
             <h2 className="text-3xl md:text-4xl font-light leading-tight tracking-tight text-white italic">
               «{dailyQuestion}»
             </h2>
           </section>
 
-          <section>
+          <section className="relative z-20">
             <StateSwitch
               label="Определение Объекта"
               options={Object.values(ObjectState)}
@@ -116,20 +116,20 @@ const App: React.FC = () => {
             />
           </section>
 
-          <section>
-            <div className="border border-zinc-900 p-8 bg-black relative z-10">
-              <h3 className="text-[10px] uppercase tracking-widest text-zinc-600 mb-6 font-bold">Новое Наблюдение</h3>
+          <section className="relative z-10">
+            <div className="border border-zinc-900 p-8 bg-black shadow-[0_0_50px_rgba(0,0,0,1)]">
+              <h3 className="text-[10px] uppercase tracking-widest text-zinc-500 mb-6 font-bold">Новое Наблюдение</h3>
               <textarea
                 value={observationText}
                 onChange={(e) => setObservationText(e.target.value)}
-                placeholder="Зафиксируйте факты, а не интерпретации..."
-                className="w-full bg-black border-none text-white text-base focus:ring-0 placeholder:text-zinc-800 min-h-[200px] resize-none mb-6 font-light leading-relaxed outline-none"
+                placeholder="Зафиксируйте факты без оценочных суждений..."
+                className="w-full bg-black border-none text-white text-base focus:ring-0 placeholder:text-zinc-600 min-h-[220px] resize-none mb-6 font-light leading-relaxed outline-none"
               />
               <div className="flex justify-end pt-6 border-t border-zinc-900">
                 <button
                   onClick={handleSaveObservation}
                   disabled={!observationText.trim()}
-                  className="px-10 py-4 bg-white text-black text-[10px] tracking-[0.2em] font-black hover:bg-zinc-200 transition-all disabled:opacity-10 active:scale-95"
+                  className="px-10 py-4 bg-white text-black text-[10px] tracking-[0.2em] font-black hover:bg-zinc-200 transition-all disabled:opacity-5 active:scale-95 shadow-lg"
                 >
                   ЗАПИСАТЬ
                 </button>
@@ -140,52 +140,52 @@ const App: React.FC = () => {
 
         {/* Правая колонка */}
         <div className="lg:col-span-5 space-y-12">
-          <section className="border border-zinc-900 p-8 bg-black">
-            <h3 className="text-[10px] uppercase tracking-widest text-red-600 mb-6 font-bold underline underline-offset-8 decoration-red-900/30">
+          <section className="border border-zinc-900 p-8 bg-black relative">
+            <h3 className="text-[10px] uppercase tracking-widest text-red-700 mb-6 font-bold underline underline-offset-8 decoration-red-900/40">
               Запрещенные Действия
             </h3>
             <ul className="space-y-5">
               {FORBIDDEN_ACTIONS.map((action, idx) => (
                 <li key={idx} className="flex items-start gap-4 group">
-                  <span className="text-[10px] font-mono text-zinc-800 group-hover:text-red-600 transition-colors">0{idx + 1}</span>
-                  <span className="text-xs text-zinc-500 font-light leading-snug group-hover:text-zinc-300 transition-colors">{action}</span>
+                  <span className="text-[10px] font-mono text-zinc-800 group-hover:text-red-700 transition-colors">0{idx + 1}</span>
+                  <span className="text-xs text-zinc-400 font-light leading-snug group-hover:text-zinc-200 transition-colors">{action}</span>
                 </li>
               ))}
             </ul>
           </section>
 
-          <section>
+          <section className="relative">
              <div className="flex justify-between items-center mb-8">
-                <h3 className="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Журнал состояний</h3>
+                <h3 className="text-[10px] uppercase tracking-widest text-zinc-500 font-bold">Журнал состояний</h3>
                 <button 
                   onClick={() => setIsHistoryExpanded(!isHistoryExpanded)}
-                  className="text-[10px] text-zinc-700 hover:text-white transition-colors underline decoration-zinc-900"
+                  className="text-[10px] text-zinc-600 hover:text-white transition-colors underline decoration-zinc-900"
                 >
                   {isHistoryExpanded ? 'Свернуть' : 'Развернуть'}
                 </button>
              </div>
              
-             <div className="space-y-6 max-h-[700px] overflow-y-auto pr-4 custom-scrollbar">
+             <div className="space-y-6 max-h-[700px] overflow-y-auto pr-4">
                {history.length === 0 ? (
                  <p className="text-xs text-zinc-800 italic">Событий не зафиксировано.</p>
                ) : (
                  history.map((obs) => (
-                   <div key={obs.id} className="border border-zinc-900 p-6 bg-black hover:border-zinc-700 transition-all group">
+                   <div key={obs.id} className="border border-zinc-900 p-6 bg-black hover:border-zinc-700 transition-all group relative">
                       <div className="flex justify-between items-start mb-4">
                         <div className="flex gap-2 items-center">
-                          <span className="text-[8px] px-2 py-0.5 bg-zinc-950 text-zinc-500 font-bold border border-zinc-900">{translateState(obs.objectState)}</span>
-                          <span className="text-[8px] px-2 py-0.5 bg-zinc-950 text-zinc-500 font-bold border border-zinc-900">{translateRole(obs.humanRole)}</span>
+                          <span className="text-[8px] px-2 py-0.5 bg-zinc-950 text-zinc-400 font-bold border border-zinc-800">{translateState(obs.objectState)}</span>
+                          <span className="text-[8px] px-2 py-0.5 bg-zinc-950 text-zinc-400 font-bold border border-zinc-800">{translateRole(obs.humanRole)}</span>
                         </div>
                         <span className="text-[9px] font-mono text-zinc-800 uppercase">{new Date(obs.timestamp).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}</span>
                       </div>
-                      <p className={`text-sm text-zinc-400 font-light leading-relaxed whitespace-pre-wrap ${!isHistoryExpanded && 'line-clamp-3 text-zinc-600'}`}>
+                      <p className={`text-sm text-zinc-300 font-light leading-relaxed whitespace-pre-wrap relative z-10 ${!isHistoryExpanded && 'line-clamp-3 text-zinc-500'}`}>
                         {obs.content}
                       </p>
                       <div className="mt-6 flex justify-between items-center pt-4 border-t border-zinc-900/30">
                         <span className="text-[9px] text-zinc-800 font-mono">{new Date(obs.timestamp).toLocaleDateString('ru-RU')}</span>
                         <button 
                           onClick={() => handleDeleteObservation(obs.id)}
-                          className="text-[8px] text-zinc-900 hover:text-red-700 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity font-bold"
+                          className="text-[8px] text-zinc-900 hover:text-red-700 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity font-bold px-2 py-1"
                         >
                           Удалить
                         </button>
@@ -198,7 +198,7 @@ const App: React.FC = () => {
         </div>
       </main>
 
-      <footer className="mt-32 pt-12 border-t border-zinc-900 text-center pb-20 bg-black">
+      <footer className="mt-auto pt-24 pb-20 border-t border-zinc-900 text-center bg-black relative z-10">
         <p className="text-[9px] tracking-[0.5em] text-zinc-800 uppercase font-semibold">
           Наблюдаемость — первичная функция эволюции систем.
         </p>
